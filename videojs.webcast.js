@@ -93,7 +93,7 @@ _V_.SyncComponent = _V_.Component.extend({
     }
 });
 _V_.SyncComponent.options = {
-	cuepointfilter : "*"
+	cuepointfilter : ".*"
 };
 
 _V_.Slideshow = _V_.SyncComponent.extend({
