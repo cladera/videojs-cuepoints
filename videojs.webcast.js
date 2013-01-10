@@ -121,5 +121,5 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     }
 });
 _V_.Slideshow.options = {
-	cuepointfilter : "slideshow";
+	cuepointfilter : "slideshow"
 };
