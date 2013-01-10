@@ -113,10 +113,11 @@ _V_.Slideshow = _V_.SyncComponent.extend({
         return this._super(type, attrs);
     },
     start : function (c){
-    	this._super();
+    	this._super(c);
       this.el.innerHTML = "<div>Slide in</div>";
     },
     end: function(c){
+    	this._super(c);
       this.el.innerHTML = "";
     }
 });
