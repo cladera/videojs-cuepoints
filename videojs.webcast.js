@@ -112,10 +112,10 @@ _V_.SyncComponent = _V_.Component.extend({
         });
     },
     start : function(c){
-        console.log(c);
+        //Start function
     },
     end : function (c){
-        console.log(c);
+        //End function 
     }
 });
 _V_.SyncComponent.options = {
@@ -143,11 +143,14 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     },
     start : function (c){
     	this._super(c);
-      	this.el.innerHTML = "<div>Slide in</div>"; //Testing
+    	var slide = document.createElement("img");
+    	slide.setAttribute("src", c.opts.src);
+    	slide.setAttribute("id", c.opts.id);
+    	this.el.appendChild(slide);
     },
     end: function(c){
     	this._super(c);
-      	this.el.innerHTML = ""; //Testing
+      	this.el.removeChild(this.el.querySelector("img#"+c.opts.id));
     }
 });
 _V_.Slideshow.options = {
