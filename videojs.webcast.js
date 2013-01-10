@@ -66,7 +66,9 @@ _V_.Cuepoint.prototype = {
 * Webcast Component
 */
 //Extends Component
-_V_.Player.prototype.wc = 99;
+_V_.Player.prototype.wc = function (){
+	return this.webcast;
+};
 
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
