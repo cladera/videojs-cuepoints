@@ -47,7 +47,7 @@ _V_.Cuepoint.prototype = {
 */
 //Enable Webcast component
 _V_.options.components['webcast'] = {
-	components: {};
+	components: {}
 }; 
 
 //Extends Component
