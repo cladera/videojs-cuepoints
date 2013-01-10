@@ -68,7 +68,8 @@ _V_.Webcast = _V_.Component.extend({
 */
 _V_.SyncComponent = _V_.Component.extend({
     init: function (player, options){
-    	//_V_.merge(options, _V_.SyncComponent.options);
+    	console.log(options);
+    	_V_.merge(options, _V_.SyncComponent.options);
     	console.log(options);
         var p = this._super(player.options);
         var self = this;
@@ -99,7 +100,7 @@ _V_.SyncComponent.options = {
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
     	_V_.merge(options, _V_.Slideshow.options);
-    	console.log(options);
+    	//console.log(options);
         var p = this._super(player, options);
     },
     buildCSSClass: function(){
