@@ -1,40 +1,26 @@
 /**
 * Cuepoint definition
 */
-
-_V_.Cuepoint = function(player, type, start, end, opts){
-	//Copy attributes
-    this.type = type;
-    this.start = start;
-    this.end = end;
-    this.opts = opts;
-    this.player = player;
-    this.fired = false; //Set fired flag to false
-};
-
-//Cuepoint prototype
-_V_.Cuepoint.prototype = {
+_V_.Cuepoint = _V_.Class.extend({
+	init: function (player, type, start, end, opts){
+		this.player = player;
+		this.type = type;
+		this.start = start;
+		this.end = end;
+		this.opts = opts;
+	},
 	activate : function (){
-	    //Start listening to timepudate event
-	    this.player.addEvent("timeupdate", this.proxy(this._process()));
-	    /*this.player.addEvent("timeupdate", function(){
-	    	//Check if current time is between start and end
-	        if(this.currentTime() >= self.start && this.currentTime() < self.end){
-	            if(self.fired) //Do nothing if start has already been called
-	                return;
-	            self.fired = true; //Set fired flag to true
-	            self._start(); //Call start function
-	        }else{
-	            if(!self.fired) //Do nothing if end has already been called
-	                return;
-	            self.fired = false; //Set fired flat to false
-	            self._end(); //Call end function
-	        }
-	    });*/
+		var self = this;
+		this.player.addEvent("timeupdate", function (){
+			self._process();
+		});
 	},
 	suspend : function (){
+		var self = this;
 		this.fired = false;
-		this.player.removeEvent("timeupdate", this.proxy(this._process()));
+		this.player.removeEvent("timeupdate", function (){
+			self._process();
+		});
 	},
 	_process: function (){
 		//Check if current time is between start and end
@@ -60,25 +46,22 @@ _V_.Cuepoint.prototype = {
         e.cuepoint = this;
         this.player.triggerEvent(e);
     }
-};
-
+});
 /**
 * Webcast Component
 */
 //Extends Component
-_V_.Player.prototype.wc = function (){
-	return this.webcast;
-};
+_V_.webcasts = {};
 
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
-        this._super(player, options);
+        var w = this._super(player, options);
         //Init webcast
         this.cuepoints = [];
-        this.show();
-    },
-    show : function () {
-    	this._super();
+        this.player.webcast = this;
+        var e = new _V_.Event("webcastReady");
+        e.webcast = this;
+        this.player.triggerEvent(e);
     },
     buildCSSClass: function(){
         return " vjs-webcast ";
@@ -108,7 +91,6 @@ _V_.SyncComponent = _V_.Component.extend({
     	var opts = {};
     	_V_.merge(opts, _V_.SyncComponent.options); //Copy defaults
     	_V_.merge(opts, options); //Override/extend with options from constructor
-    	console.log(opts);
     	//Call super constructor
         var p = this._super(player, opts);
         var self = this;
@@ -146,7 +128,6 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	var opts = {};
     	_V_.merge(opts, _V_.Slideshow.options); //Copy defaults
     	_V_.merge(opts, options); //Override/extend with options from constructor
-    	console.log(opts);
     	//Call super constructor
         var p = this._super(player, opts);
     },
