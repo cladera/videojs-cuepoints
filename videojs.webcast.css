@@ -1,0 +1,8 @@
+.vjs-slideshow {
+	position: absolute;
+	width: 600px;
+	height: 400px;
+	top: 0;
+        right: -610px;
+	background-color: green;
+}
