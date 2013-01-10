@@ -65,19 +65,17 @@ _V_.Cuepoint.prototype = {
 /**
 * Webcast Component
 */
-//Enable Webcast component
-_V_.options.components.webcast = {
-	components: {}
-}; 
-
 //Extends Component
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
-        var p = this._super(player, options);
+        this._super(player, options);
         //Init webcast
         this.player.webcast = this;
         this.cuepoints = [];
-        
+        this.show();
+    },
+    show : function () {
+    	this._super();
     },
     buildCSSClass: function(){
         return " vjs-webcast ";
@@ -139,9 +137,6 @@ _V_.SyncComponent.options = {
 	cuepointfilter : ".*"
 };
 
-//Enable slideshow component
-_V_.options.components.webcast.components.slideshow = {};
-
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
     	//Set options
@@ -174,3 +169,9 @@ _V_.Slideshow = _V_.SyncComponent.extend({
 _V_.Slideshow.options = {
 	cuepointfilter : "slideshow"
 };
+//Enable Webcast component
+_V_.options.components.webcast = {
+	components: {}
+};
+//Enable slideshow component
+_V_.options.components.webcast.components.slideshow = {};
