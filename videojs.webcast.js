@@ -66,11 +66,12 @@ _V_.Cuepoint.prototype = {
 * Webcast Component
 */
 //Extends Component
+_V_.Player.prototype.wc = 99;
+
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
         this._super(player, options);
         //Init webcast
-        this.player.wc = 99;
         this.cuepoints = [];
         this.show();
     },
