@@ -1,4 +1,10 @@
 /**
+* WebcastJS
+* @version 1.0
+* @author Carles Galan Cladera
+**/
+
+/**
 * Cuepoint definition
 */
 _V_.Cuepoint = _V_.Class.extend({
@@ -48,7 +54,7 @@ _V_.Cuepoint = _V_.Class.extend({
     }
 });
 /**
-* Webcast Component
+* Webcast Component definition
 */
 
 _V_.Webcast = _V_.Component.extend({
@@ -120,6 +126,9 @@ _V_.SyncComponent.options = {
 	cuepointfilter : ".*"
 };
 
+/**
+* Slideshow sync compnent definition
+*/
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
     	//Set options
