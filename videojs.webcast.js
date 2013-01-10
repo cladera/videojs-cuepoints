@@ -50,8 +50,6 @@ _V_.Cuepoint = _V_.Class.extend({
 /**
 * Webcast Component
 */
-//Extends Component
-_V_.webcasts = {};
 
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
