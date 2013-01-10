@@ -66,7 +66,7 @@ _V_.Cuepoint.prototype = {
 * Webcast Component
 */
 //Enable Webcast component
-_V_.options.components['webcast'] = {
+_V_.options.components.webcast = {
 	components: {}
 }; 
 
@@ -140,7 +140,7 @@ _V_.SyncComponent.options = {
 };
 
 //Enable slideshow component
-_V_.options.components["webcast"].components["slideshow"]= {};
+_V_.options.components.webcast.components.slideshow = {};
 
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
