@@ -21,6 +21,7 @@ _V_.Cuepoint = function(player, type, start, end, opts){
         }
     })
 };
+
 //Cuepoint prototype
 _V_.Cuepoint.prototype = {
     _start: function(){
@@ -34,10 +35,10 @@ _V_.Cuepoint.prototype = {
         this.player.triggerEvent(e);
     }
 };
-
+	
 //Webcast Component
-_V_.Webcast = _V_.Component.extend({
-    options : {
+_V_.Webcast = _V_.Component.extend({	
+	options : {
         components: {
             "slideshow": {}
         }
@@ -67,33 +68,38 @@ _V_.Webcast = _V_.Component.extend({
 */
 _V_.SyncComponent = _V_.Component.extend({
     init: function (player, options){
+    	_V_.merge(options, _V_.SyncComponent.options);
+    	console.log(options);
         var p = this._super(player.options);
         var self = this;
         player.addEvent("cuepointStart", function(event){
             var c = event.cuepoint;
-            if(options.cuepointfilter == "*" || options.cuepointfilter == c.type){
-                self.onCuepointStart(c);
-            }
+            var regExp = new RegExp(options.cuepointfilter,'ig');
+            if(regExp.test(c.type))
+            	self.start(c);
         });
         player.addEvent("cuepointEnd", function(event){
             var c = event.cuepoint;
-            if(options.cuepointfilter == "*" || options.cuepointfilter == c.type){
-                self.onCuepointEnd(c);
-            }
+            var regExp = new RegExp(options.cuepointfilter,'ig');
+            if(regExp.test(c.type))
+            	self.end(c);
         });
     },
-    onCuepointStart : function(c){
+    start : function(c){
         console.log(c);
     },
-    onCuepointEnd : function (c){
+    end : function (c){
         console.log(c);
     }
 });
-_
+_V_.SyncComponent.options = {
+	cuepointfilter : "*"
+};
 
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
-        options.cuepointfilter = "slideshows";
+    	_V_.merge(options, _V_.Slideshow.options);
+    	console.log(options);
         var p = this._super(player, options);
     },
     buildCSSClass: function(){
@@ -106,10 +112,14 @@ _V_.Slideshow = _V_.SyncComponent.extend({
       
         return this._super(type, attrs);
     },
-    onCuepointStart : function (c){
+    start : function (c){
+    	this._super();
       this.el.innerHTML = "<div>Slide in</div>";
     },
-    onCuepointEnd: function(c){
+    end: function(c){
       this.el.innerHTML = "";
     }
 });
+_V_.Slideshow.options = {
+	cuepointfilter : "slideshow";
+};
