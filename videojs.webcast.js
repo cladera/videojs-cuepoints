@@ -10,26 +10,46 @@ _V_.Cuepoint = function(player, type, start, end, opts){
     this.opts = opts;
     this.player = player;
     this.fired = false; //Set fired flag to false
-    var self = this; //Copy this
-    //Start listening to timepudate event
-    this.player.addEvent("timeupdate", function(){
-    	//Check if current time is between start and end
-        if(this.currentTime() >= self.start && this.currentTime() < self.end){
-            if(self.fired) //Do nothing if start has already been called
-                return;
-            self.fired = true; //Set fired flag to true
-            self._start(); //Call start function
-        }else{
-            if(!self.fired) //Do nothing if end has already been called
-                return;
-            self.fired = false; //Set fired flat to false
-            self._end(); //Call end function
-        }
-    })
 };
 
 //Cuepoint prototype
 _V_.Cuepoint.prototype = {
+	activate : function (){
+	    //Start listening to timepudate event
+	    this.player.addEvent("timeupdate", this.proxy(this._process()));
+	    /*this.player.addEvent("timeupdate", function(){
+	    	//Check if current time is between start and end
+	        if(this.currentTime() >= self.start && this.currentTime() < self.end){
+	            if(self.fired) //Do nothing if start has already been called
+	                return;
+	            self.fired = true; //Set fired flag to true
+	            self._start(); //Call start function
+	        }else{
+	            if(!self.fired) //Do nothing if end has already been called
+	                return;
+	            self.fired = false; //Set fired flat to false
+	            self._end(); //Call end function
+	        }
+	    });*/
+	},
+	suspend : function (){
+		this.fired = false;
+		this.player.removeEvent("timeupdate", this.proxy(this._process()));
+	},
+	_process: function (){
+		//Check if current time is between start and end
+        if(this.player.currentTime() >= this.start && this.player.currentTime() < this.end){
+            if(this.fired) //Do nothing if start has already been called
+                return;
+            this.fired = true; //Set fired flag to true
+            this._start(); //Call start function
+        }else{
+            if(!this.fired) //Do nothing if end has already been called
+                return;
+            this.fired = false; //Set fired flat to false
+            this._end(); //Call end function
+        }
+	},
     _start: function(){
         var e = new _V_.Event("cuepointStart");
         e.cuepoint = this;
@@ -55,7 +75,7 @@ _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
         var p = this._super(player, options);
         //Init webcast
-        new _V_.Cuepoint(player, "slideshows", 4, 10, {}); //Test
+        this.cuepoints = [];
         
     },
     buildCSSClass: function(){
@@ -67,6 +87,12 @@ _V_.Webcast = _V_.Component.extend({
             innerHTML:''
         }, attrs); 
         return this._super(type, attrs);
+    },
+    addCuepoint : function(type, start, end, opts){
+    	var cp = new _V_.Cuepoint(this.player, type, start, end, opts);
+    	cp.activate();
+    	this.cuepoints.push(cp);
+    	return cp;
     }
 });
 
