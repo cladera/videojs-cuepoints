@@ -70,7 +70,7 @@ _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
         this._super(player, options);
         //Init webcast
-        this.player.webcast = this;
+        this.player.wc = this;
         this.cuepoints = [];
         this.show();
     },
