@@ -68,7 +68,7 @@ _V_.Webcast = _V_.Component.extend({
         this.player.triggerEvent(e);
     },
     buildCSSClass: function(){
-        return " vjs-webcast ";
+        return "webcast-js";
     },
     createElement: function(type, attrs){
         attrs = _V_.merge({
@@ -139,7 +139,7 @@ _V_.Slideshow = _V_.SyncComponent.extend({
         var p = this._super(player, opts);
     },
     buildCSSClass: function(){
-        return this._super() +  " vjs-slideshow ";
+        return this._super() +  "wjs-slideshow";
     },
     createElement: function(type, attrs){
         attrs = _V_.merge({
