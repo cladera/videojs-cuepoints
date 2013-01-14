@@ -60,6 +60,14 @@ _V_.Cuepoint = _V_.Class.extend({
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
         this._super(player, options);
+        //Set with and height
+        var defaults = {
+        	width : "1020px",
+        	height: "670px"
+        }
+        _V_.merge(palyer.options.webcast || {}, defaults);
+        this.el.style.width = player.options.webcast.width;
+        this.el.style.height = player.options.webcast.height;
         //Init webcast
         this.cuepoints = [];
         this.player.webcast = this;

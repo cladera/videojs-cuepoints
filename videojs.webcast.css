@@ -1,8 +1,11 @@
-.vjs-slideshow {
+.vjs-webcast {
 	position: absolute;
-	width: 600px;
-	height: 400px;
-	top: 0;
-    right: -610px;
-	background-color: green;
+	top: -10px;
+	left: -10px;
+	z-index: -1;
+}
+.vjs-webcast .wjs-slideshow {
+	position: absolute;
+	top: 10px;
+	right: 10px;
 }
