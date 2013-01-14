@@ -59,7 +59,7 @@ _V_.Cuepoint = _V_.Class.extend({
 
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
-        var w = this._super(player, options);
+        this._super(player, options);
         //Init webcast
         this.cuepoints = [];
         this.player.webcast = this;
