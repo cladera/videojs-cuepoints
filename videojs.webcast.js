@@ -12,8 +12,8 @@ _V_.Cuepoint = _V_.Class.extend({
 		this.player = player;
 		this.type = type;
 		this.start = start;
-		this.end = end;
-		this.opts = opts;
+		this.end = end || -1;
+		this.opts = opts || {};
 	},
 	activate : function (){
 		var self = this;
@@ -30,7 +30,7 @@ _V_.Cuepoint = _V_.Class.extend({
 	},
 	_process: function (){
 		//Check if current time is between start and end
-        if(this.player.currentTime() >= this.start && this.player.currentTime() < this.end){
+        if(this.player.currentTime() >= this.start && (this.end < 0 || this.player.currentTime() < this.end)){
             if(this.fired) //Do nothing if start has already been called
                 return;
             this.fired = true; //Set fired flag to true
