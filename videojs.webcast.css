@@ -1,10 +1,11 @@
-.vjs-webcast {
+.webcast-js {
 	position: absolute;
 	top: -10px;
 	left: -10px;
 	z-index: -1;
+	background: #3b3939 url(https://s3.amazonaws.com/wscontents-us1/2/6/613551413721721/assets/353/html5_background_land.jpg) repeat-x;
 }
-.vjs-webcast .wjs-slideshow {
+.webcast-js .wjs-slideshow {
 	position: absolute;
 	top: 10px;
 	right: 10px;

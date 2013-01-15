@@ -59,15 +59,13 @@ _V_.Cuepoint = _V_.Class.extend({
 
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
+    	var opts = player.options.webcast || {};
+        _V_.merge(opts, _V_.Webcast.options);
+        player.options.webcast = opts;
         this._super(player, options);
         //Set with and height
-        var defaults = {
-        	width : "1020px",
-        	height: "670px"
-        }
-        _V_.merge(palyer.options.webcast || {}, defaults);
-        this.el.style.width = player.options.webcast.width;
-        this.el.style.height = player.options.webcast.height;
+        this.el.style.width = opts.width;
+        this.el.style.height = opts.height;
         //Init webcast
         this.cuepoints = [];
         this.player.webcast = this;
@@ -92,6 +90,10 @@ _V_.Webcast = _V_.Component.extend({
     	return cp;
     }
 });
+_V_.Webcast.options = {
+	width : "1024px",
+    height: "670px"
+}
 
 /**
 * SyncComponent definition
@@ -140,11 +142,14 @@ _V_.SyncComponent.options = {
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
     	//Set options
-    	var opts = {};
+    	console.log(player.options);
+    	var opts = player.options.webcast.slideshow || {};
     	_V_.merge(opts, _V_.Slideshow.options); //Copy defaults
     	_V_.merge(opts, options); //Override/extend with options from constructor
     	//Call super constructor
-        var p = this._super(player, opts);
+        this._super(player, opts);
+        this.el.style.width = opts.width;
+        this.el.style.height = opts.height;
     },
     buildCSSClass: function(){
         return this._super() +  "wjs-slideshow";
@@ -161,6 +166,8 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	var slide = document.createElement("img");
     	slide.setAttribute("src", c.opts.src);
     	slide.setAttribute("id", c.opts.id);
+    	slide.style.width = "100%";
+    	slide.style["max-height"] = "100%";
     	this.el.appendChild(slide);
     },
     end: function(c){
@@ -169,7 +176,9 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     }
 });
 _V_.Slideshow.options = {
-	cuepointfilter : "slideshow"
+	cuepointfilter : "slideshow",
+	width: "497px",
+	height: ""
 };
 //Enable Webcast component
 _V_.options.components.webcast = {
