@@ -165,6 +165,20 @@ _V_.Slideshow = _V_.SyncComponent.extend({
         this._super(player, opts);
         this.el.style.width = opts.width;
         this.el.style.height = opts.height;
+        var self = this;
+        this.player.addEvent("fullscreenchange", function (){
+        	if(this.isFullScreen){
+        		self.hide();
+        	}else {
+        		self.show();
+        	}
+        });
+        this.player.addEvent("enterFullWindow", function (){
+        	console.log("enterFullWindow");
+        });
+        this.player.addEvent("exitFullWindow",function (){
+        	console.log("exitFullWindow");
+        });
     },
     buildCSSClass: function(){
         return this._super() +  "wjs-slideshow";
