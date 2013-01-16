@@ -190,6 +190,9 @@ _V_.Slideshow = _V_.SyncComponent.extend({
       
         return this._super(type, attrs);
     },
+    onClick: function () {
+    	console.log("Component clicked");
+    },
     setup: function (c) {
     	this.createSlide(c.opts.id, c.opts.src);    	
     },
