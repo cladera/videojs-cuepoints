@@ -17,6 +17,7 @@ _V_.Cuepoint = _V_.Class.extend({
 	},
 	activate : function (){
 		var self = this;
+		self._setup();
 		this.player.addEvent("timeupdate", function (){
 			self._process();
 		});
@@ -41,6 +42,11 @@ _V_.Cuepoint = _V_.Class.extend({
             this.fired = false; //Set fired flat to false
             this._end(); //Call end function
         }
+	},
+	_setup: function (){
+		var e = new _V_.Event("cuepointSetup");
+		e.cuepoint = this;
+		this.player.triggerEvent(e);
 	},
     _start: function(){
         var e = new _V_.Event("cuepointStart");
@@ -109,6 +115,12 @@ _V_.SyncComponent = _V_.Component.extend({
         var p = this._super(player, opts);
         var self = this;
         //Start listening to start cuepoint event
+        player.addEvent("cuepiontSetup", function (event){
+        	var c = event.cuepoint;
+        	var regExp = new RegExp(options.cuepointFilter, 'ig');
+        	if(regExp.test(c.type))
+        		self.setup(c);
+        });
         player.addEvent("cuepointStart", function(event){
             var c = event.cuepoint; //Copy cuepoint from event object
             //Filter unrelated cuepoints
@@ -124,6 +136,9 @@ _V_.SyncComponent = _V_.Component.extend({
             if(regExp.test(c.type))
             	self.end(c); //Call end function
         });
+    },
+    setup : function (c) {
+    	//Setup function
     },
     start : function(c){
         //Start function
