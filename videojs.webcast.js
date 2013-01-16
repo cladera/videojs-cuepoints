@@ -115,7 +115,7 @@ _V_.SyncComponent = _V_.Component.extend({
         var p = this._super(player, opts);
         var self = this;
         //Start listening to start cuepoint event
-        player.addEvent("cuepiontSetup", function (event){
+        player.addEvent("cuepointSetup", function (event){
         	var c = event.cuepoint;
         	var regExp = new RegExp(options.cuepointFilter, 'ig');
         	if(regExp.test(c.type))
@@ -176,24 +176,52 @@ _V_.Slideshow = _V_.SyncComponent.extend({
       
         return this._super(type, attrs);
     },
+    setup: function (c) {
+    	this.createSlide(c.opts.id, c.opts.src);    	
+    },
     start : function (c){
     	this._super(c);
-    	var slide = document.createElement("img");
-    	slide.setAttribute("src", c.opts.src);
-    	slide.setAttribute("id", c.opts.id);
-    	slide.style.width = "100%";
-    	slide.style["max-height"] = "100%";
-    	this.el.appendChild(slide);
+    	this.showSlide(c.opts.id);
+    	
     },
     end: function(c){
     	this._super(c);
-      	this.el.removeChild(this.el.querySelector("img#"+c.opts.id));
+      	this.hideSlide(c.opts.id);
+    },
+    getSlide: function (id) {
+    	return this.el.querySelector("img#"+id);
+    },
+    createSlide: function (id, src) {
+    	var self = this;
+    	var s = _V_.createElement("img", {
+    		id: id,
+    		src: src,
+    		className: "wjs-slide"
+    	});
+    	s.style.width = "100%";
+    	s.style["max-height"] = "100%";
+    	s.style.opacity = 0;
+    	s.style.visibility = "hidden";
+    	s.style.position = "absolute";
+    	s.style.top = 0;
+    	s.style.left = 0;
+    	this.el.appendChild(s);
+    },
+    hideSlide: function (id) {
+    	var s = this.getSlide(id);
+    	_V_.removeClass(s, "vjs-fade-in");
+    	_V_.addClass(s, "vjs-fade-out");
+    },
+    showSlide: function (id){
+    	var s = this.getSlide(id);
+    	_V_.removeClass(s, "vjs-fade-out");
+    	_V_.addClass(s, "vjs-fade-in");
     }
 });
 _V_.Slideshow.options = {
 	cuepointfilter : "slideshow",
 	width: "497px",
-	height: ""
+	height: "373px"
 };
 //Enable Webcast component
 _V_.options.components.webcast = {
