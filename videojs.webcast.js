@@ -65,19 +65,31 @@ _V_.Cuepoint = _V_.Class.extend({
 
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
+    	var self = this;
     	var opts = player.options.webcast || {};
         _V_.merge(opts, _V_.Webcast.options);
         player.options.webcast = opts;
         this._super(player, options);
-        //Set with and height
-        this.el.style.width = opts.width;
-        this.el.style.height = opts.height;
-        //Init webcast
+        //Init webcast properties
         this.cuepoints = [];
         this.player.webcast = this;
-        var e = new _V_.Event("webcastReady");
-        e.webcast = this;
-        this.player.triggerEvent(e);
+        //Add ready functions
+        this.ready(function() {
+        	//Reorder DOM elements
+        	this.player.el.parentNode.appendChild(this.el);
+        	_V_.insertFirst(this.player.el, this.el);
+        });
+        this.ready(function(){
+        	//Trigger webcast ready event
+	        var e = new _V_.Event("webcastReady");
+	        e.webcast = this;
+	        this.triggerEvent(e);
+        });
+        
+        //Trigger component ready functions when player is ready
+        this.player.addEvent("ready", function (){
+        	self.triggerReady();
+        });
     },
     buildCSSClass: function(){
         return "webcast-js";
@@ -96,10 +108,8 @@ _V_.Webcast = _V_.Component.extend({
     	return cp;
     }
 });
-_V_.Webcast.options = {
-	width : "1024px",
-    height: "670px"
-}
+//Default webcast options
+_V_.Webcast.options = {};
 
 /**
 * SyncComponent definition
@@ -163,22 +173,16 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	_V_.merge(opts, options); //Override/extend with options from constructor
     	//Call super constructor
         this._super(player, opts);
-        this.el.style.width = opts.width;
-        this.el.style.height = opts.height;
+        this.el.style.width = opts.width+"px";
+        this.el.style.height = opts.height+"px";
         var self = this;
-        this.player.addEvent("fullscreenchange", function (){
+        /*this.player.addEvent("fullscreenchange", function (){
         	if(this.isFullScreen){
         		self.hide();
         	}else {
         		self.show();
         	}
-        });
-        this.player.addEvent("enterFullWindow", function (){
-        	console.log("enterFullWindow");
-        });
-        this.player.addEvent("exitFullWindow",function (){
-        	console.log("exitFullWindow");
-        });
+        });*/
     },
     buildCSSClass: function(){
         return this._super() +  "wjs-slideshow";
@@ -234,8 +238,8 @@ _V_.Slideshow = _V_.SyncComponent.extend({
 });
 _V_.Slideshow.options = {
 	cuepointfilter : "slideshow",
-	width: "497px",
-	height: "373px"
+	width: "400",
+	height: "300"
 };
 //Enable Webcast component
 _V_.options.components.webcast = {
