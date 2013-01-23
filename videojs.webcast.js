@@ -69,15 +69,17 @@ _V_.Webcast = _V_.Component.extend({
         _V_.merge(opts, _V_.Webcast.options);
         player.options.webcast = opts;
         this._super(player, options);
-        //Set with and height
-        this.el.style.width = opts.width;
-        this.el.style.height = opts.height;
         //Init webcast
         this.cuepoints = [];
         this.player.webcast = this;
         var e = new _V_.Event("webcastReady");
         e.webcast = this;
         this.player.triggerEvent(e);
+        var self = this;
+        this.player.addEvent("ready", function (){
+        	this.el.parentNode.appendChild(self.el);
+        	self.el.appendChild(this.el);
+        });
     },
     buildCSSClass: function(){
         return "webcast-js";
@@ -97,9 +99,9 @@ _V_.Webcast = _V_.Component.extend({
     }
 });
 _V_.Webcast.options = {
-	width : "1024px",
-    height: "670px"
-}
+	width: 0,
+	height: 0
+};
 
 /**
 * SyncComponent definition
