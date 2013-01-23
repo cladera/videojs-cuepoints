@@ -136,6 +136,7 @@ _V_.SyncComponent = _V_.Component.extend({
             if(regExp.test(c.type))
             	self.end(c); //Call end function
         });
+        this.addEvent("click", this.onClick);
     },
     setup : function (c) {
     	//Setup function
@@ -145,7 +146,8 @@ _V_.SyncComponent = _V_.Component.extend({
     },
     end : function (c){
         //End function 
-    }
+    },
+    onClick: function(){}
 });
 _V_.SyncComponent.options = {
 	cuepointfilter : ".*"
