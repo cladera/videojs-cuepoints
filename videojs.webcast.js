@@ -198,6 +198,14 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     },
     onClick: function () {
     	console.log("Component clicked");
+    	var elem = this.el;
+    	if (elem.requestFullscreen) {
+			elem.requestFullscreen();
+		} else if (elem.mozRequestFullScreen) {
+		  	elem.mozRequestFullScreen();
+		} else if (elem.webkitRequestFullscreen) {
+		  	elem.webkitRequestFullscreen();
+		}
     },
     setup: function (c) {
     	this.createSlide(c.opts.id, c.opts.src);    	
