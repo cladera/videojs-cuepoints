@@ -83,7 +83,7 @@ _V_.Webcast = _V_.Component.extend({
         	//Trigger webcast ready event
 	        var e = new _V_.Event("webcastReady");
 	        e.webcast = this;
-	        this.triggerEvent(e);
+	        this.player.triggerEvent(e);
         });
         
         //Trigger component ready functions when player is ready
@@ -157,7 +157,17 @@ _V_.SyncComponent = _V_.Component.extend({
     end : function (c){
         //End function 
     },
-    onClick: function(){}
+    onClick: function(){},
+    setSize: function (w, h, unit){
+    	if(unit == undefined)
+    		unit = "px";
+    	this.el.style.width = w+unit;
+    	this.el.style.height = h+unit;
+    },
+    zoomIn: function (){
+    },
+    zoomOut: function (){
+    }
 });
 _V_.SyncComponent.options = {
 	cuepointfilter : ".*"
@@ -169,22 +179,13 @@ _V_.SyncComponent.options = {
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
     	//Set options
-    	console.log(player.options);
     	var opts = player.options.webcast.slideshow || {};
     	_V_.merge(opts, _V_.Slideshow.options); //Copy defaults
     	_V_.merge(opts, options); //Override/extend with options from constructor
     	//Call super constructor
         this._super(player, opts);
-        this.el.style.width = opts.width+"px";
-        this.el.style.height = opts.height+"px";
-        var self = this;
-        /*this.player.addEvent("fullscreenchange", function (){
-        	if(this.isFullScreen){
-        		self.hide();
-        	}else {
-        		self.show();
-        	}
-        });*/
+        this.setSize(this.options.width, this.options.height);
+        this.zoom = false;
     },
     buildCSSClass: function(){
         return this._super() +  "wjs-slideshow";
@@ -197,15 +198,17 @@ _V_.Slideshow = _V_.SyncComponent.extend({
         return this._super(type, attrs);
     },
     onClick: function () {
-    	console.log("Component clicked");
-    	var elem = this.el;
-    	if (elem.requestFullscreen) {
-			elem.requestFullscreen();
-		} else if (elem.mozRequestFullScreen) {
-		  	elem.mozRequestFullScreen();
-		} else if (elem.webkitRequestFullscreen) {
-		  	elem.webkitRequestFullscreen();
-		}
+    	/*if(this.zoom){
+    		this.setSize(this.options.width, this.options.height);
+    		this.removeClass("zoom");
+    		this.zoom = false;
+    		
+    	}else {
+    		this.setSize("","","");
+    		this.addClass("zoom-in");
+    		this.zoom = true;
+    	}
+    	this.triggerEvent("zoomchange");*/
     },
     setup: function (c) {
     	this.createSlide(c.opts.id, c.opts.src);    	
@@ -223,27 +226,36 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	return this.el.querySelector("img#"+id);
     },
     createSlide: function (id, src) {
+    	console.log("Setting slide up");
     	var self = this;
     	var s = _V_.createElement("img", {
     		id: id,
     		src: src,
     		className: "wjs-slide"
     	});
-    	s.style.width = "100%";
+    	s.style.width = this.options.width+"px";
     	s.style["max-height"] = "100%";
     	s.style.opacity = 0;
     	s.style.visibility = "hidden";
     	s.style.position = "absolute";
-    	s.style.top = 0;
-    	s.style.left = 0;
+    	this.addEvent("zoomchange", function(){
+    		
+    		/*if(this.zoom){
+    			s.style.width = "";
+    		}else {
+    			s.style.width = this.options.width+"px";
+    		}*/
+    	});
     	this.el.appendChild(s);
     },
     hideSlide: function (id) {
+    	console.log("Hidding slide");
     	var s = this.getSlide(id);
     	_V_.removeClass(s, "vjs-fade-in");
     	_V_.addClass(s, "vjs-fade-out");
     },
     showSlide: function (id){
+    	console.log("Showing slide");
     	var s = this.getSlide(id);
     	_V_.removeClass(s, "vjs-fade-out");
     	_V_.addClass(s, "vjs-fade-in");
@@ -251,8 +263,8 @@ _V_.Slideshow = _V_.SyncComponent.extend({
 });
 _V_.Slideshow.options = {
 	cuepointfilter : "slideshow",
-	width: "400",
-	height: "300"
+	width: 400,
+	height: 300
 };
 //Enable Webcast component
 _V_.options.components.webcast = {

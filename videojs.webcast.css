@@ -8,15 +8,9 @@
 	float: left;
 }
 .webcast-js .wjs-slideshow {
-	background: grey;
-	float: right;
-}
-.wjs-slideshow:-webkit-full-screen {
-	position: absolute;
-	width:100%;
-	height:100%;
+	float:right;
 }
 .webcast-js .wjs-slideshow .wjs-slide {
 	 /* CSS Shadows */
-  -webkit-box-shadow: 0 2px 4px 0 #000; -moz-box-shadow: 0 2px 4px 0 #000; box-shadow: 0 2px 4px 0 #000;
+	-webkit-box-shadow: 0 2px 4px 0 #000; -moz-box-shadow: 0 2px 4px 0 #000; box-shadow: 0 2px 4px 0 #000;
 }
