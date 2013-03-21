@@ -1,0 +1,37 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <script src="http://vjs.zencdn.net/c/video.js"></script>
+        <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+        <script src="jquery.wjs.js"></script>
+        <script src="../../videojs.webcast.js"></script>
+        <link href="wjs-video-js-skin.css" rel="stylesheet">
+        <link href="https://s3.amazonaws.com/webcastjs/videojs.webcast.css" rel="stylesheet">
+        <script>
+            $(function(){
+                $(".webcast").wjs({
+                    video:{
+                        skin: "vjs-wjs-skin",
+                        poster: "http://video-js.zencoder.com/oceans-clip.png",
+                        autoplay: false,
+                        width: 497,
+                        height: 280,
+                        sources: [
+                            {src: "http://players.edgesuite.net/videos/big_buck_bunny/bbb_448x252.mp4", type: "video/mp4"}
+                        ]
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="webcast"></div>
+    </body>
+</html>
