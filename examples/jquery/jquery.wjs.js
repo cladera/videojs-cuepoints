@@ -30,7 +30,12 @@
                         "poster": o.video.poster,
                         "preload": o.video.preload,
                         "controls": o.video.controls,
-                        "autoplay": o.video.autoplay
+                        "autoplay": o.video.autoplay,
+                        "webcast": {
+                        	"slideshow": {
+                        		"width": 500
+                        	}
+                        }
                     }
                     , function(){
                         this.addEvent("webcastReady", function (e){

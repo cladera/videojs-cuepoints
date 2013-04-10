@@ -226,7 +226,6 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	return this.el.querySelector("img#"+id);
     },
     createSlide: function (id, src) {
-    	console.log("Setting slide up");
     	var self = this;
     	var s = _V_.createElement("img", {
     		id: id,
@@ -249,13 +248,11 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	this.el.appendChild(s);
     },
     hideSlide: function (id) {
-    	console.log("Hidding slide");
     	var s = this.getSlide(id);
     	_V_.removeClass(s, "vjs-fade-in");
     	_V_.addClass(s, "vjs-fade-out");
     },
     showSlide: function (id){
-    	console.log("Showing slide");
     	var s = this.getSlide(id);
     	_V_.removeClass(s, "vjs-fade-out");
     	_V_.addClass(s, "vjs-fade-in");
