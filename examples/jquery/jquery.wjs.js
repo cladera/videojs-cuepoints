@@ -38,6 +38,8 @@
                         }
                     }
                     , function(){
+                    	console.log("VideoJS ready");
+                    	console.log(this);
                         this.addEvent("webcastReady", function (e){
                             var webcast = this.webcast;
                             var cps = {};

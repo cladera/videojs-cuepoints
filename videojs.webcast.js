@@ -66,9 +66,8 @@ _V_.Cuepoint = _V_.Class.extend({
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
     	var self = this;
-    	var opts = player.options.webcast || {};
-        _V_.merge(opts, _V_.Webcast.options);
-        player.options.webcast = opts;
+    	//Create options object
+   		player.options.webcast = this.options = player.options.webcast || {};
         this._super(player, options);
         //Init webcast properties
         this.cuepoints = [];
@@ -117,12 +116,8 @@ _V_.Webcast.options = {};
 
 _V_.SyncComponent = _V_.Component.extend({
     init: function (player, options){
-    	//Set options
-    	var opts = {};
-    	_V_.merge(opts, _V_.SyncComponent.options); //Copy defaults
-    	_V_.merge(opts, options); //Override/extend with options from constructor
     	//Call super constructor
-        var p = this._super(player, opts);
+        var p = this._super(player, options);
         var self = this;
         //Start listening to start cuepoint event
         player.addEvent("cuepointSetup", function (event){
@@ -179,11 +174,10 @@ _V_.SyncComponent.options = {
 _V_.Slideshow = _V_.SyncComponent.extend({
     init: function (player, options){
     	//Set options
-    	var opts = player.options.webcast.slideshow || {};
-    	_V_.merge(opts, _V_.Slideshow.options); //Copy defaults
-    	_V_.merge(opts, options); //Override/extend with options from constructor
+    	options = this.options = _V_.merge(this.options || {}, options);
+    	options = this.options = _V_.merge(this.options, player.options.webcast.slideshow || {});
     	//Call super constructor
-        this._super(player, opts);
+        this._super(player, options);
         this.setSize(this.options.width, this.options.height);
         this.zoom = false;
     },
@@ -258,14 +252,13 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	_V_.addClass(s, "vjs-fade-in");
     }
 });
-_V_.Slideshow.options = {
-	cuepointfilter : "slideshow",
-	width: 400,
-	height: 300
-};
 //Enable Webcast component
 _V_.options.components.webcast = {
 	components: {}
 };
 //Enable slideshow component
-_V_.options.components.webcast.components.slideshow = {};
+_V_.options.components.webcast.components.slideshow =  {
+	cuepointfilter : "slideshow",
+	width: 400,
+	height: 300
+};
