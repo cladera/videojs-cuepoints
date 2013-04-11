@@ -191,19 +191,6 @@ _V_.Slideshow = _V_.SyncComponent.extend({
       
         return this._super(type, attrs);
     },
-    onClick: function () {
-    	/*if(this.zoom){
-    		this.setSize(this.options.width, this.options.height);
-    		this.removeClass("zoom");
-    		this.zoom = false;
-    		
-    	}else {
-    		this.setSize("","","");
-    		this.addClass("zoom-in");
-    		this.zoom = true;
-    	}
-    	this.triggerEvent("zoomchange");*/
-    },
     setup: function (c) {
     	this.createSlide(c.opts.id, c.opts.src);    	
     },
@@ -231,14 +218,6 @@ _V_.Slideshow = _V_.SyncComponent.extend({
     	s.style.opacity = 0;
     	s.style.visibility = "hidden";
     	s.style.position = "absolute";
-    	this.addEvent("zoomchange", function(){
-    		
-    		/*if(this.zoom){
-    			s.style.width = "";
-    		}else {
-    			s.style.width = this.options.width+"px";
-    		}*/
-    	});
     	this.el.appendChild(s);
     },
     hideSlide: function (id) {

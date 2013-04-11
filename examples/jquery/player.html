@@ -21,11 +21,26 @@ and open the template in the editor.
                         skin: "vjs-wjs-skin",
                         poster: "http://video-js.zencoder.com/oceans-clip.png",
                         autoplay: false,
-                        width: 497,
-                        height: 280,
                         sources: [
                             {src: "http://players.edgesuite.net/videos/big_buck_bunny/bbb_448x252.mp4", type: "video/mp4"}
                         ]
+                    },
+                    cuepointsservice: {
+                    	enabled: false
+                    },
+                    ready : function (player){
+                    	player.webcast.addCuepoint("slideshow",0,10,{
+                            id: "slide0",
+                            src: "http://css3.bradshawenterprises.com/images/Stones.jpg"
+                        });
+                        player.webcast.addCuepoint("slideshow",10,30,{
+                            id: "slide01",
+                            src: "http://css3.bradshawenterprises.com/images/Cirques.jpg"
+                        });
+                        $(this).wjs("addCuepoint", "slideshow",30,100,{
+                            id: "slide0",
+                            src: "http://css3.bradshawenterprises.com/images/Stones.jpg"
+                        });
                     }
                 });
             });
