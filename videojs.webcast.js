@@ -59,16 +59,19 @@ _V_.Cuepoint = _V_.Class.extend({
         this.player.triggerEvent(e);
     }
 });
+
 /**
 * Webcast Component definition
 */
-
 _V_.Webcast = _V_.Component.extend({
     init: function (player, options){
     	var self = this;
     	//Create options object
-   		player.options.webcast = this.options = player.options.webcast || {};
-        this._super(player, options);
+    	options = this.options = _V_.merge(this.options || {}, options);
+ 		options = this.options = _V_.merge(this.options, _V_.Webcast.options);
+   		options = this.options = player.options.webcast = _V_.merge(this.options, player.options.webcast || {});
+   		//Call super constructor
+        this._super(player, this.options);
         //Init webcast properties
         this.cuepoints = [];
         this.player.webcast = this;
@@ -97,8 +100,10 @@ _V_.Webcast = _V_.Component.extend({
         attrs = _V_.merge({
             className: this.buildCSSClass(),
             innerHTML:''
-        }, attrs); 
-        return this._super(type, attrs);
+        }, attrs);
+        var wel = this._super(type, attrs);
+       	wel.style.background = this.options.background;
+        return wel;
     },
     addCuepoint : function(type, start, end, opts){
     	var cp = new _V_.Cuepoint(this.player, type, start, end, opts);
@@ -108,7 +113,9 @@ _V_.Webcast = _V_.Component.extend({
     }
 });
 //Default webcast options
-_V_.Webcast.options = {};
+_V_.Webcast.options = {
+	background : '#3b3939'
+};
 
 /**
 * SyncComponent definition
@@ -116,6 +123,8 @@ _V_.Webcast.options = {};
 
 _V_.SyncComponent = _V_.Component.extend({
     init: function (player, options){
+    	options = this.options = _V_.merge(this.options || {}, options);
+    	options = this.options = _V_.merge(this.options || {}, _V_.SyncComponent.options);
     	//Call super constructor
         var p = this._super(player, options);
         var self = this;
@@ -165,9 +174,7 @@ _V_.SyncComponent = _V_.Component.extend({
     }
 });
 _V_.SyncComponent.options = {
-	cuepointfilter : ".*"
 };
-
 /**
 * Slideshow sync compnent definition
 */

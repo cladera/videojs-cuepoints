@@ -13,7 +13,7 @@ and open the template in the editor.
         <script src="jquery.wjs.js"></script>
         <script src="../../videojs.webcast.js"></script>
         <link href="wjs-video-js-skin.css" rel="stylesheet">
-        <link href="https://s3.amazonaws.com/webcastjs/videojs.webcast.css" rel="stylesheet">
+        <link href="../../videojs.webcast.css" rel="stylesheet">
         <script>
             $(function(){
                 $(".webcast").wjs({
@@ -28,7 +28,12 @@ and open the template in the editor.
                     cuepointsservice: {
                     	enabled: false
                     },
+                    background: {
+                    	style: '#3b3939 url(https://s3.amazonaws.com/wscontents-us1/2/6/613551413721721/assets/353/html5_background_land.jpg) repeat-x'
+                    },
                     ready : function (player){
+                    	//Add cuepoints examples
+                    	//Using player API
                     	player.webcast.addCuepoint("slideshow",0,10,{
                             id: "slide0",
                             src: "http://css3.bradshawenterprises.com/images/Stones.jpg"
@@ -37,6 +42,7 @@ and open the template in the editor.
                             id: "slide01",
                             src: "http://css3.bradshawenterprises.com/images/Cirques.jpg"
                         });
+                        //Using jquery plugin API
                         $(this).wjs("addCuepoint", "slideshow",30,100,{
                             id: "slide0",
                             src: "http://css3.bradshawenterprises.com/images/Stones.jpg"

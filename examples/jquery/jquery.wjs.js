@@ -1,7 +1,7 @@
 /**
  * Description of wjs
  *
- * @author cgcladera-vancast
+ * @author Carles Galan Cladera
  */
 (function($){
 	var methods = {
@@ -31,14 +31,15 @@
 	            if(typeof _V_ === "function"){
 	            	_V_(v.attr("id")
 	                    , {
-	                        "poster": o.video.poster,
-	                        "preload": o.video.preload,
-	                        "controls": o.video.controls,
-	                        "autoplay": o.video.autoplay,
-	                        "webcast": {
-	                        	"slideshow": {
-	                        		"width": o.slideshow.width
-	                        	}
+	                        poster : o.video.poster,
+	                        preload : o.video.preload,
+	                        controls : o.video.controls,
+	                        autoplay : o.video.autoplay,
+	                        webcast : {
+	                        	slideshow : {
+	                        		width : o.slideshow.width
+	                        	},
+	                        	background : o.background.style
 	                        }
 	                    }
 	                    , function(){
@@ -131,7 +132,7 @@
             controls: true,
             sources: [],
             width: 475,
-            height: 356
+            height: 267
         },
         slideshow: {
         	width: 475
