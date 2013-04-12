@@ -47,6 +47,7 @@
 	                        	$.fn.wjs.players[id] = this;                      	
 	                            if(o.cuepointsservice.enabled){
 	                            	var cps = {};
+	                            	var webcast = this.webcast;
 		                            $.getScript(o.cuepointsservice.host+"/socket.io/socket.io.js", function(){
 		                                //create socket
 		                                var socket = io.connect(o.cuepointsservice.host+o.cuepointsservice.socket);
