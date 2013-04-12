@@ -92,6 +92,7 @@ _V_.Webcast = _V_.Component.extend({
         this.player.addEvent("ready", function (){
         	self.triggerReady();
         });
+        this.addEvent("click", this.onClick);
     },
     buildCSSClass: function(){
         return "webcast-js";
@@ -110,6 +111,13 @@ _V_.Webcast = _V_.Component.extend({
     	cp.activate();
     	this.cuepoints.push(cp);
     	return cp;
+    },
+    onClick : function (event){
+    	//hide control bar when user touches outside the video
+    	if(event.target == this.el){
+    		this.player.controlBar.fadeOut();
+    	}
+    	
     }
 });
 //Default webcast options
