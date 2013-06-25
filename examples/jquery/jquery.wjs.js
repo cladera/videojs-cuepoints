@@ -48,39 +48,66 @@
 	                            if(o.cuepointsservice.enabled){
 	                            	var cps = {};
 	                            	var webcast = this.webcast;
-		                            $.getScript(o.cuepointsservice.host+"/socket.io/socket.io.js", function(){
-		                                //create socket
-		                                var socket = io.connect(o.cuepointsservice.host+o.cuepointsservice.socket);
-		                                socket.emit('subscribe', {
-		                                    part: o.cuepointsservice.part, 
-		                                    point: o.cuepointsservice.point
-		                                });
-		                                socket.on('error', function (error){
-		                                    console.log(error);
-		                                });
-		                                socket.on('message', function(data){
-		                                    console.log(data);
-		                                });
-		                                socket.on('cuepoint', function (cuepoint){
-		                                    if(!(cuepoint.type in cps))
-		                                        cps[cuepoint.type] = [];
-		                                    console.log(cuepoint);
-		                                    switch(cuepoint.type){
-		                                        case "slideshow":
-		                                            var opts = {};
-		                                            var type_cps = cps[cuepoint.type];
-		                                            opts.src = cuepoint.src;
-		                                            opts.id = "slide_"+type_cps.length;
-		                                            var cp = webcast.addCuepoint(cuepoint.type, cuepoint.start, cuepoint.end||-1, opts);
-		                                            if(type_cps.length && type_cps[type_cps.length-1].end < 0)
-		                                                type_cps[type_cps.length-1].end = cuepoint.start;
-		                                            type_cps.push(cp);
-		                                            break;
-		                                    }
-		                                });
-		                            });
+	                            	switch(o.cuepointsservice.type){
+	                            		case 'socket':
+	                            			$.getScript(o.cuepointsservice.host+"/socket.io/socket.io.js", function(){
+				                                //create socket
+				                                var socket = io.connect(o.cuepointsservice.host+o.cuepointsservice.app);
+				                                socket.emit('subscribe', {
+				                                    part: o.cuepointsservice.part, 
+				                                    point: o.cuepointsservice.point
+				                                });
+				                                socket.on('error', function (error){
+				                                    console.log(error);
+				                                });
+				                                socket.on('message', function(data){
+				                                    console.log(data);
+				                                });
+				                                socket.on('cuepoint', function (cuepoint){
+				                                    if(!(cuepoint.type in cps))
+				                                        cps[cuepoint.type] = [];
+				                                    switch(cuepoint.type){
+				                                        case "slideshow":
+				                                            var opts = {};
+				                                            var type_cps = cps[cuepoint.type];
+				                                            opts.src = cuepoint.src;
+				                                            opts.id = "slide_"+type_cps.length;
+				                                            var cp = webcast.addCuepoint(cuepoint.type, cuepoint.start, cuepoint.end||-1, opts);
+				                                            if(type_cps.length && type_cps[type_cps.length-1].end < 0)
+				                                                type_cps[type_cps.length-1].end = cuepoint.start;
+				                                            type_cps.push(cp);
+				                                            break;
+				                                    }
+				                                });
+				                            });
+	                            			break;
+	                            		default:
+	                            			$.ajax({
+	                            				url: o.cuepointsservice.host+o.cuepointsservice.app,
+	                            				type: 'get',
+	                            				dataType: 'json',
+	                            				success: function(cuepoints){
+	                            					$.each(cuepoints, function(idx, cuepoint){
+	                            						if(!(cuepoint.type in cps))
+					                                        cps[cuepoint.type] = [];
+					                                    switch(cuepoint.type){
+					                                        case "slideshow":
+					                                            var opts = {};
+					                                            var type_cps = cps[cuepoint.type];
+					                                            opts.src = cuepoint.src;
+					                                            opts.id = "slide_"+type_cps.length;
+					                                            var cp = webcast.addCuepoint(cuepoint.type, cuepoint.start, cuepoint.end||-1, opts);
+					                                            if(type_cps.length && type_cps[type_cps.length-1].end < 0)
+					                                                type_cps[type_cps.length-1].end = cuepoint.start;
+					                                            type_cps.push(cp);
+					                                            break;
+					                                    }
+	                            					});
+	                            				}
+	                            			});
+	                            			break;
+	                            	}			                           
 		                    	}
-		                    	
 		                    	//Call ready method
 	                        	o.ready.call(element, this);
 	                        });
@@ -123,7 +150,8 @@
             point: 0,
             part: 0,
             host: "http://node.webcasting-studio.net:8080",
-            socket: "/cuepoints/live" 
+            app: "/cuepoints/live",
+            type: "socket"
         },
         video:{
             skin: "vjs-default-skin",
