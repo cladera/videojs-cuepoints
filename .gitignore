@@ -1,3 +1,4 @@
 /.project
 /.settings
-/webcast.js
+/node_modules
+/examples
