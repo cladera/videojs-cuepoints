@@ -24,7 +24,11 @@ module.exports = function(grunt) {
       },
       build: {
         src: 'src/<%= pkg.name %>.js',
-        dest: 'build/<%= pkg.name %>.min.js'
+        dest: 'build/<%= pkg.distName %>.js'
+      },
+      dist: {
+      	src: 'src/<%= pkg.name %>.js',
+        dest: 'dist/<%= pkg.distName %>.js'
       }
     },
     s3: {
@@ -59,5 +63,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-s3');
   // Default task(s).
   grunt.registerTask('default', ['uglify']);
-  grunt.registerTask('deploy',['uglify','s3']);
+  grunt.registerTask('deploy',['uglify:dist','s3']);
 };

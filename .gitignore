@@ -1,6 +1,12 @@
 /.project
 /.settings
-/node_modules
-/examples
+
 .s3config.json
 *.sample
+
+node_modules
+npm-debug.log
+
+examples
+
+dist/*
