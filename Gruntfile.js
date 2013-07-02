@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       minor: {
         upload: [
           {
-            src: 'build/*',
+            src: 'dist/*',
             dest: version.majorMinor+'/',
             headers: {
               'Cache-Control': 'public, max-age=2628000'
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
       patch: {
         upload: [
           {
-            src: 'build/*',
+            src: 'dist/*',
             dest: version.full+'/',
             headers: {
               'Cache-Control': 'public, max-age=31536000'
