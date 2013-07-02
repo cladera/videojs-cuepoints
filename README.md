@@ -2,7 +2,7 @@ WebcastJS
 =========
 ##HTML5 Media Cuepoints Plugin
 
-WebcastJS is a plugin for video.js 4.0 player. WebcastJS component allows
+WebcastJS is a plugin for video.js 4.0 player. WebcastJS component allows you
 sincronize infinite elements with your media.
 
 ##Instalation:
