@@ -7,10 +7,7 @@ function Cuepoint(player,options){
 	this.startFn = opts.onStart || function(){};
 	this.endFn = opts.onEnd || function(){};
 	this.params = opts.params || {};
-}
-Cuepoint.prototype._setup = function (){
-	this.player.trigger("cuepointSetup",this);
-}
+};
 Cuepoint.prototype._process = function (){
 	//Check if current time is between start and end
     if(this.player.currentTime() >= this.start && (this.end < 0 || this.player.currentTime() < this.end)){
@@ -24,20 +21,26 @@ Cuepoint.prototype._process = function (){
         this.fired = false; //Set fired flat to false
         this._end(); //Call end function
     }
-}
+};
 Cuepoint.prototype._start = function(){
 	this.startFn.call(this, this.params);
-}
+};
 Cuepoint.prototype._end = function(){
 	this.endFn.call(this, this.params);
-}
+};
 Cuepoint.prototype.activate = function(){
-	this._setup();
 	var self = this;
 	this.player.on("timeupdate", function(){
 		self._process();
 	});
-}
+};
+Cuepoint.prototype.suspend = function(){
+	this.fired = false;
+	var self = this;
+	this.player.off("timeupdate", function(){
+		self._process();
+	});
+};
 function webcastjs(options){
 	console.log("Webcast Configured");
 	var player = this;
