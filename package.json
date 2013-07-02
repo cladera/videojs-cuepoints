@@ -3,6 +3,9 @@
   "title": "WebcastJS",
   "distName": "videojs.webcast",
   "version": "1.0.0",
+  "author_name": "Carlos Galan Cladera",
+  "author_email": "cgcladera@gmail.com",
+  "author_url": "www.carlosgalancladera.net",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",

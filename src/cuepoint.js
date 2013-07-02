@@ -7,17 +7,19 @@ function Cuepoint(player,options){
 	this.startFn = opts.onStart || function(){};
 	this.endFn = opts.onEnd || function(){};
 	this.params = opts.params || {};
-};
+}
 Cuepoint.prototype._process = function (){
 	//Check if current time is between start and end
     if(this.player.currentTime() >= this.start && (this.end < 0 || this.player.currentTime() < this.end)){
-        if(this.fired) //Do nothing if start has already been called
+        if(this.fired){ //Do nothing if start has already been called
             return;
+        }
         this.fired = true; //Set fired flag to true
         this._start(); //Call start function
     }else{
-        if(!this.fired) //Do nothing if end has already been called
+        if(!this.fired){ //Do nothing if end has already been called
             return;
+        }
         this.fired = false; //Set fired flat to false
         this._end(); //Call end function
     }

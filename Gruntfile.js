@@ -19,7 +19,10 @@ module.exports = function(grunt) {
     pkg: pkg,
     jshint: {
       src: {
-        src: ['src/*.js', 'Gruntfile.js']
+        src: ['src/*.js'],
+        options: {
+        	jshintrc: '.jshintrc'
+        }
       }
     },
     concat: {
@@ -30,7 +33,8 @@ module.exports = function(grunt) {
     },
     uglify: {
       options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        banner: '/*! <%= pkg.title %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'+
+        		'/*! Author: <%= pkg.author_name %> <<%= pkg.author_email %>>*/\n'
       },
       build: {
         src: 'build/<%= pkg.name %>.js',
@@ -71,8 +75,9 @@ module.exports = function(grunt) {
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-s3');
   // Default task(s).
-  grunt.registerTask('default', ['concat','uglify']);
-  grunt.registerTask('deploy',['uglify:dist','s3']);
+  grunt.registerTask('default', ['jshint', 'concat','uglify']);
+  grunt.registerTask('deploy',['jshint', 'concat','uglify:dist','s3']);
 };
