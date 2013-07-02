@@ -17,17 +17,27 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: pkg,
-    
+    jshint: {
+      src: {
+        src: ['src/*.js', 'Gruntfile.js']
+      }
+    },
+    concat: {
+    	build: {
+    		src: ['src/cuepoint.js','src/core.js'],
+    		dest:'build/<%= pkg.name %>.js'
+    	}
+    },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'src/<%= pkg.name %>.js',
+        src: 'build/<%= pkg.name %>.js',
         dest: 'build/<%= pkg.distName %>.js'
       },
       dist: {
-      	src: 'src/<%= pkg.name %>.js',
+      	src: 'build/<%= pkg.name %>.js',
         dest: 'dist/<%= pkg.distName %>.js'
       }
     },
@@ -60,8 +70,9 @@ module.exports = function(grunt) {
 
   // Load the plugin that provides the "uglify" task.
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-s3');
   // Default task(s).
-  grunt.registerTask('default', ['uglify']);
+  grunt.registerTask('default', ['concat','uglify']);
   grunt.registerTask('deploy',['uglify:dist','s3']);
 };

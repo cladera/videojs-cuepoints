@@ -5,7 +5,7 @@ WebcastJS
 WebcastJS is a plugin for video.js 4.0 player. WebcastJS component allows you
 sincronize infinite elements with your media.
 
-##Instalation:
+##Installation:
 Add videojs-webcast.js CDN distributed file to your head tag, just after
 videojs:
 
