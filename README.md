@@ -16,4 +16,29 @@ videojs:
       <script src="https://d4vx37tj0yup1.cloudfront.net/1.1/videojs.cuepoints.js"></script>
     </head>
       ....
-	
+
+##Usage
+When videojs is ready, initialize the plugin and use the function `addCuepoint` to sync actions
+with the timeline:
+
+	<script>
+		videojs("myVideo").ready(function(){
+			this.cuepoints();
+			this.addCuepoint({
+				namespace: "logger",
+				start: 0,
+				end: 30,
+				onStart: function(params){
+					if(params.error){
+						console.error("Error at second 0");
+					}else{
+						console.log("Log at second 0");
+					}
+				},
+				onEnd: function(params){
+					console.log("Action ends at second 30");
+				},
+				params: {error: false}
+			});
+		});
+	</script>
