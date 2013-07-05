@@ -1,18 +1,18 @@
-function webcastjs(options){
+function vjsCuepoints(options){
 	var player = this;
-	player.webcast = player.webcast || {};
-	player.webcast.init = function(options){
-		player.webcast.cuepoints = [];
+	player.cuepoints = player.cuepoints || {};
+	player.cuepoints.init = function(options){
+		player.cuepoints.instances = [];
 	};
-	player.webcast._addCuepoint = function(options){
+	player.cuepoints._addCuepoint = function(options){
 		var cp = new Cuepoint(player, options);
 		cp.activate();
-		player.webcast.cuepoints.push(cp);
+		player.cuepoints.instances.push(cp);
 	};
-	player.webcast.init(options);
+	player.cuepoints.init(options);
 }
 videojs.Player.prototype.addCuepoint = function(options){
-	this.webcast._addCuepoint(options);
+	this.cuepoints._addCuepoint(options);
 	return this;
 };
-videojs.plugin('cuepoints', webcastjs);
+videojs.plugin('cuepoints', vjsCuepoints);
