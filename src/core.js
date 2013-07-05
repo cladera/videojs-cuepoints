@@ -15,4 +15,4 @@ videojs.Player.prototype.addCuepoint = function(options){
 	this.webcast._addCuepoint(options);
 	return this;
 };
-videojs.plugin('webcastjs', webcastjs);
+videojs.plugin('cuepoints', webcastjs);
