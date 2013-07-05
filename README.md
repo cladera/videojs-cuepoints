@@ -5,7 +5,7 @@ VideoJS Cuepoints
 VideoJS Cue Points is a plugin for Video JS player. With this plugin you can
 sync actions with the media timeline and make the viewers experiences richer. 
 
-##Installation:
+##Installation
 Add videojs.cuepoints.js CDN distributed file to your head tag, just after
 videojs:
 
@@ -42,3 +42,8 @@ with the timeline:
 			});
 		});
 	</script>
+	
+##Please, fork me!
+I have a lot of things to learn yet (one of them is my English). So, fork me and help me to improve
+the project.
+Thanks! ;)
