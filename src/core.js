@@ -8,11 +8,11 @@ function vjsCuepoints(options){
 		var cp = new Cuepoint(player, options);
 		cp.activate();
 		player.cuepoints.instances.push(cp);
+		return cp;
 	};
 	player.cuepoints.init(options);
 }
 videojs.Player.prototype.addCuepoint = function(options){
-	this.cuepoints._addCuepoint(options);
-	return this;
+	return this.cuepoints._addCuepoint(options);
 };
 videojs.plugin('cuepoints', vjsCuepoints);

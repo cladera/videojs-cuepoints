@@ -24,6 +24,8 @@ Cuepoint.prototype._process = function (){
         this._end(); //Call end function
     }
 };
+Cuepoint.prototype.start = 0;
+Cuepoint.prototype.end = -1;
 Cuepoint.prototype._start = function(){
 	this.startFn.call(this, this.params);
 };
