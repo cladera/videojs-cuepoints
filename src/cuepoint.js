@@ -7,6 +7,7 @@ function Cuepoint(player,options){
 	this.startFn = opts.onStart || function(){};
 	this.endFn = opts.onEnd || function(){};
 	this.params = opts.params || {};
+	this.fired = false;
 }
 Cuepoint.prototype._process = function (){
 	//Check if current time is between start and end
