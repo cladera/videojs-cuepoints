@@ -8,8 +8,7 @@ function vjsCuepoints(options){
 		var i = 0,
 			j = player.cuepoints.instances.length
 		;
-		for (i; i < j; i++) {
-			console.log('destroy')
+		for (; i < j; i++) {
 			player.cuepoints.instances[i].destroy();
 			player.cuepoints.instances[i] = null;
 		}
