@@ -11,19 +11,19 @@ function Cuepoint(player,options){
 }
 Cuepoint.prototype._process = function (){
 	//Check if current time is between start and end
-    if(this.player.currentTime() >= this.start && (this.end < 0 || this.player.currentTime() < this.end)){
-        if(this.fired){ //Do nothing if start has already been called
-            return;
-        }
-        this.fired = true; //Set fired flag to true
-        this._start(); //Call start function
-    }else{
-        if(!this.fired){ //Do nothing if end has already been called
-            return;
-        }
-        this.fired = false; //Set fired flat to false
-        this._end(); //Call end function
-    }
+	if(this.player.currentTime() >= this.start && (this.end < 0 || this.player.currentTime() < this.end)){
+		if(this.fired){ //Do nothing if start has already been called
+			return;
+		}
+		this.fired = true; //Set fired flag to true
+		this._start(); //Call start function
+	}else{
+		if(!this.fired){ //Do nothing if end has already been called
+			return;
+		}
+		this.fired = false; //Set fired flat to false
+		this._end(); //Call end function
+	}
 };
 Cuepoint.prototype.start = 0;
 Cuepoint.prototype.end = -1;
@@ -35,22 +35,35 @@ Cuepoint.prototype._end = function(){
 };
 Cuepoint.prototype.activate = function(){
 	var self = this;
-	this.player.on("timeupdate", function(){
+	this.processHandler = function() {
 		self._process();
-	});
+	};
+	this.player.on("timeupdate", this.processHandler);
 };
 Cuepoint.prototype.suspend = function(){
 	this.fired = false;
 	var self = this;
-	this.player.off("timeupdate", function(){
-		self._process();
-	});
+	this.player.off("timeupdate", this.processHandler);
+};
+Cuepoint.prototype.destroy = function(){
+	var self = this;
+	this.player.off("timeupdate", this.processHandler);
 };
 function vjsCuepoints(options){
 	var player = this;
 	player.cuepoints = player.cuepoints || {};
 	player.cuepoints.init = function(options){
 		player.cuepoints.instances = [];
+	};
+	player.cuepoints.destroy = function(){
+		var i = 0,
+			j = player.cuepoints.instances.length
+		;
+		for (; i < j; i++) {
+			player.cuepoints.instances[i].destroy();
+			player.cuepoints.instances[i] = null;
+		}
+		player.cuepoints.instances = null;
 	};
 	player.cuepoints._addCuepoint = function(options){
 		var cp = new Cuepoint(player, options);
@@ -62,5 +75,8 @@ function vjsCuepoints(options){
 }
 videojs.Player.prototype.addCuepoint = function(options){
 	return this.cuepoints._addCuepoint(options);
+};
+videojs.Player.prototype.destroyCuepoints = function(){
+	return this.cuepoints.destroy();
 };
 videojs.plugin('cuepoints', vjsCuepoints);

@@ -4,6 +4,16 @@ function vjsCuepoints(options){
 	player.cuepoints.init = function(options){
 		player.cuepoints.instances = [];
 	};
+	player.cuepoints.destroy = function(){
+		var i = 0,
+			j = player.cuepoints.instances.length
+		;
+		for (; i < j; i++) {
+			player.cuepoints.instances[i].destroy();
+			player.cuepoints.instances[i] = null;
+		}
+		player.cuepoints.instances = null;
+	};
 	player.cuepoints._addCuepoint = function(options){
 		var cp = new Cuepoint(player, options);
 		cp.activate();
@@ -14,5 +24,8 @@ function vjsCuepoints(options){
 }
 videojs.Player.prototype.addCuepoint = function(options){
 	return this.cuepoints._addCuepoint(options);
+};
+videojs.Player.prototype.destroyCuepoints = function(){
+	return this.cuepoints.destroy();
 };
 videojs.plugin('cuepoints', vjsCuepoints);
