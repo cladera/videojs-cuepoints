@@ -13,7 +13,7 @@ videojs:
     <head>
       <link href="http://vjs.zencdn.net/4.0/video-js.css" rel="stylesheet">
       <script src="http://vjs.zencdn.net/4.0/video.js"></script>
-      <script src="videojs.cuepoints.js"></script>
+      <script src="dist/videojs.cuepoints.js"></script>
     </head>
       ....
 
