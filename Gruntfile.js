@@ -1,11 +1,6 @@
 module.exports = function(grunt) {
-	var pkg, s3, version, verParts;
+	var pkg, version, verParts;
 	pkg = grunt.file.readJSON('package.json');
-  	try {
-    	s3 = grunt.file.readJSON('.s3config.json');
-  	} catch(e) {
-    	s3 = {};
-  	}
   	verParts = pkg.version.split('.');
 	version = {
 		full: pkg.version,
