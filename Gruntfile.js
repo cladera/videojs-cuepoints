@@ -44,31 +44,6 @@ module.exports = function(grunt) {
       	src: 'build/<%= pkg.name %>.js',
         dest: 'dist/<%= pkg.distName %>.js'
       }
-    },
-    s3: {
-      options: s3,
-      minor: {
-        upload: [
-          {
-            src: 'dist/*',
-            dest: version.majorMinor+'/',
-            headers: {
-              'Cache-Control': 'public, max-age=2628000'
-            }
-          }
-        ]
-      },
-      patch: {
-        upload: [
-          {
-            src: 'dist/*',
-            dest: version.full+'/',
-            headers: {
-              'Cache-Control': 'public, max-age=31536000'
-            }
-          }
-        ]
-      }
     }
   });
 
@@ -76,8 +51,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-s3');
   // Default task(s).
   grunt.registerTask('default', ['jshint', 'concat','uglify']);
-  grunt.registerTask('deploy',['jshint', 'concat','uglify:dist','s3']);
+  grunt.registerTask('dist',['jshint', 'concat','uglify:dist']);
 };
