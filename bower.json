@@ -1,0 +1,23 @@
+{
+  "name": "videojs-cuepoints",
+  "version": "1.1.6",
+  "homepage": "https://github.com/cladera/videojs-cuepoints",
+  "authors": [
+    "(Carlos Galan Cladera <cgcladera@gmail.com>)"
+  ],
+  "description": "sync actions with the media timeline",
+  "main": "dist/videojs.cuepoints.js",
+  "keywords": [
+    "videojs"
+  ],
+  "dependencies": {
+    "video.js": "^4.0.0"
+  },
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "build"
+  ]
+}
