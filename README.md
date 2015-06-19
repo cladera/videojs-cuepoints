@@ -17,6 +17,8 @@ videojs:
     </head>
       ....
 
+**Warning!** Hosted version will be removed July 3rd. From now on, in order to use this library clone/download this project and use files in dist/ folder.
+
 ##Usage
 When videojs is ready, initialize the plugin and use the function `addCuepoint` to sync actions
 with the timeline:
