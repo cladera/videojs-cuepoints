@@ -6,6 +6,7 @@
   "author": "Carlos Galan Cladera <cgcladera@gmail.com>",
   "license": "MIT",
   "author_url": "www.carlosgalancladera.net",
+  "github_url": "http://github.com/cladera/videojs-cuepoints",
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",

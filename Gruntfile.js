@@ -29,7 +29,9 @@ module.exports = function(grunt) {
     uglify: {
       options: {
         banner: '/*! <%= pkg.title %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'+
-        		'/*! Author: <%= pkg.author_name %> <<%= pkg.author_email %>>*/\n'
+                '/*! See <%=pkg.github_url %> for details */\n'+
+        		    '/*! Author: <%= pkg.author %> <%= pkg.author_email %>*/\n'+
+                '/*! Released under the <%= pkg.license %> license */\n'
       },
       build: {
         src: 'build/<%= pkg.name %>.js',
