@@ -1,11 +1,11 @@
 VideoJS Cuepoints
 ==================
-##HTML5 Sync Cuepoints Plugin
+## HTML5 Sync Cuepoints Plugin
 
 VideoJS Cue Points is a plugin for Video JS player. With this plugin you can
 sync actions with the media timeline and make the viewers experiences richer. 
 
-##Installation
+## Installation
 Add videojs.cuepoints.js, just after
 videojs:
 
@@ -19,7 +19,7 @@ videojs:
 
 **Warning!** Hosted version will be removed July 3rd. From now on, in order to use this library clone/download this project and use files in dist/ folder.
 
-##Usage
+## Usage
 When videojs is ready, initialize the plugin and use the function `addCuepoint` to sync actions
 with the timeline:
 
@@ -45,7 +45,7 @@ with the timeline:
 		});
 	</script>
 	
-##Please, fork me!
+## Please, fork me!
 I have a lot of things to learn yet (one of them is my English). So, fork me and help me to improve
 the project.
 Thanks! ;)
