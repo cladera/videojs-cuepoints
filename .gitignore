@@ -1,6 +1,7 @@
 /.project
 /.settings
 /.idea
+/.vscode
 
 .s3config.json
 *.sample
